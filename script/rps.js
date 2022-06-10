@@ -119,13 +119,12 @@ const newGame = () => {
     resultContainer.innerHTML = msg;
 }
 
-// THis logic is flawed. Spend mre time on this.
 const getWinner = (user, puter) => {
-    // assume computer will win, until otherwise proven.
     let curWinner = 'puter';    
-    
+    // checks winning profiles for the user to see if this profile matches.
+    // If no match or tie, computer wins.
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
-    
+    // checks all winning profiles 2X to make sure.
     for (let i = 0;  i < 5; i++) {
         if (user === puter) {           
             curWinner = 'tie';
