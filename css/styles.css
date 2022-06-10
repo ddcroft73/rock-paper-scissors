@@ -21,7 +21,7 @@ span {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 500px;
+    max-width: 600px;
     height: 510px;
     width: 100%;
     border-radius: 12px;
@@ -40,10 +40,10 @@ span {
     border-bottom: 1px solid rgb(11, 11, 197);
     border-left: 1px solid rgb(11, 11, 197);
     border-right: 1px solid rgb(11, 11, 197);
-    max-width: 450px;
+    max-width: 600px;
     height: 140px;
     width: 100%;
-    gap:20px;
+    gap:0px;
     
 }
 .score-choice-container {
@@ -56,10 +56,10 @@ span {
     border-bottom: 1px solid rgb(11, 11, 197);
     border-left: 1px solid rgb(11, 11, 197);
     border-right: 1px solid rgb(11, 11, 197);
-    max-width: 450px;
+    max-width: 600px;
     height: 60px;
     width: 100%;
-    gap:20px;
+    gap:0px;
 }
 
 .weapons {
@@ -94,7 +94,7 @@ img[width="40"]{
     margin-top: 5px;
 
     width: 100%;
-    max-width:450px;
+    max-width:600px;
     height: 25px;
 
     border-top-left-radius: 12px;
@@ -116,7 +116,7 @@ img[width="40"]{
     margin-top: 0px;
 
     width: 100%;
-    max-width:450px;
+    max-width:600px;
     height: 30px;
 
     border-top-left-radius: 12px;
@@ -195,7 +195,7 @@ img[width="40"]{
     background-color: rgb(212, 211, 211);
     width: 85%;
     height: 80px;
-    max-width: 420px;
+    max-width: 600px;
     margin-top: 5px;
     border-radius: 12px;
     border: 1px solid rgb(11, 11, 197);
@@ -205,7 +205,7 @@ img[width="40"]{
 }
 .button-container {
     display: flex;
-    max-width: 450px;
+    max-width: 600px;
     width: 100%;
 }
 
@@ -222,7 +222,7 @@ button {
     flex: auto;
     color: rgb(251, 63, 5);
     border: 1px solid rgb(11, 11, 197);
-    max-width: 450px;
+    max-width: 600px;
     width: 100%;
     margin: 5px;
     border-radius: 15px;

@@ -56,9 +56,13 @@ User can select their chpice by clicking and the chpice will be displayed
     // Swap the image that refers to the human with the choice
     const setUserChoice = (choice) => {
         clearPuterChoice()
+        //const bg = document.querySelector('.choice');
+       // bg.style.cssText = 'background-color: rgb(251, 63, 5)';
+
         choice = 'image/' + choice + '.png';
         const img = document.querySelector("#human-choice");
         img.src = choice;
+
     }
 
     // resets the computer choice
@@ -95,8 +99,8 @@ User can select their chpice by clicking and the chpice will be displayed
         }        
         //Make sure the user has selected.
         let userChoice = queryUserChoice();
-
-        if (userChoice === 'user.png') {
+        
+        if (userChoice === 'image/user.png') {
             alert("Select your weapon To play.");
             return;
         }
