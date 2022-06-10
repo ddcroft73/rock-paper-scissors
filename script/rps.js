@@ -74,14 +74,14 @@ let getPuterChoice = (choice) => {
 }
 
 //Play a round
-const throwHands = () => {
-    // Only play 5 games        
-    if (gameCnt === 5) {
+const throwHands = () => {        
+    gameCnt++;  
+    //play to 6 but on;y counting for 5 games. 
+    if (gameCnt === 6) {
         reportResults();
         newGame();
         return;
     }        
-    
     let userChoice = queryUserChoice();    
     if (userChoice === 'image/user.png') {
         alert("Select your weapon To play.");
@@ -113,10 +113,10 @@ const newGame = () => {
     resultContainer.innerHTML = msg;
 }
 
+// checks winning profiles for the user to see if this profile matches.
+// If no match or tie, computer wins.
 const getWinner = (user, puter) => {
     let curWinner = 'puter';    
-    // checks winning profiles for the user to see if this profile matches.
-    // If no match or tie, computer wins.
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
     // checks all winning profiles 2X to make sure.
     for (let i = 0;  i < 5; i++) {
@@ -130,7 +130,7 @@ const getWinner = (user, puter) => {
         }             
     } 
     
-    updateStatus(curWinner);
+    updateStatus(curWinner);    
     return curWinner;
 }
 
@@ -153,12 +153,9 @@ const updateScore = (winner) => {
         puterScore++;
         puter_score.textContent = puterScore;
     }
-    gameCnt++;
-
     if (winner === 'tie') {
-        // disregard the count due to tie.
         gameCnt--;       
-    }
+    }    
 }
 
 // Final round report
@@ -172,6 +169,8 @@ const reportResults = () => {
         roundWinner = 'Computer';
     }    
     let textContent = 'Round ' + gameRounds + ':  [' + humanScore + '] [' + puterScore + '] '+ roundWinner + ' wins.';
+
+
     // add a div in the "results" section to display the results.
     const resultContainer = document.querySelector('.results');
     const content = document.createElement('div');
