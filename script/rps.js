@@ -67,30 +67,27 @@ let getPuterChoice = (choice) => {
 
 //Play the round
 const throwHands = () => {        
-    gameCnt++;  
-    //on game 6, report the results. 
-    if (gameCnt === 6) {
-        reportResults();
-        newGame();
-        return;
-    }        
+    
     let userChoice = queryUserChoice();    
     if (userChoice === 'image/user.png') {
         writeToStatus("Please <span>select a weapon</span>.");
         return;
     }
-
+    // didnt overthink the AI in this. 
     let selection = Math.floor(Math.random() * 3) + 1;                
     let puterChoice = getPuterChoice(selection);
-
     let winner = getWinner(userChoice, puterChoice);
     updateScore(winner);
 }
     
 const newGame = () => {
+
     gameCnt = 0;
     humanScore = 0;
     puterScore = 0;
+
+    // let the user play again.
+    document.getElementById("play").disabled = false; 
 
     const imgHuman = document.querySelector("#human-choice");
     imgHuman.src = 'image/user.png';
@@ -103,13 +100,12 @@ const newGame = () => {
     writeToStatus('&nbsp;&nbsp;<span>NEW GAME</span>?');
 }
 
-// checks winning profiles for the user to see if this profile matches.
-// If no match or tie, computer wins.
+// an array of wins for the user is defined in wins[]. Loops thorugh the array and checks 
+// to see if the user one. If not the computer won or there was a tie.
 const getWinner = (user, puter) => {
     let curWinner = 'puter';    
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
-    console.log(profile)
-    // checks all winning profiles 2X to make sure.
+    
     for (let i = 0, l = wins.length;  i < l; i++) {
         if (user === puter) {           
             curWinner = 'tie';
@@ -125,15 +121,17 @@ const getWinner = (user, puter) => {
 }
 
 const updateStatus = (winner) => {    
-    //  display the current results.
+    //  display the current results on the last game played.
     if (winner === 'puter') winner = 'Computer';
-    if (winner === 'user') winner = 'Player';
-    if (winner === 'tie') winner = 'Tie Game';
+    if (winner === 'user')  winner = 'Player';
+    if (winner === 'tie')   winner = 'Tie Game';
 
-    writeToStatus('<span>WINNER</span>: ['+ winner+ ']');
+    writeToStatus('<span>WINNER</span>: [<span>'+ winner+ '</span>]');
 }
 
 const updateScore = (winner) => {
+    gameCnt++;           
+    
     if (winner === 'user' ) {
         humanScore++;
         human_score.textContent = humanScore;
@@ -145,6 +143,15 @@ const updateScore = (winner) => {
     if (winner === 'tie') {
         gameCnt--;       
     }    
+
+    //on game 5, report the results. 
+    if (gameCnt == 5) {
+        reportResults();    
+        // give the user a second to see the last results before resetting.
+        document.getElementById("play").disabled = true; 
+        setTimeout(newGame, 1500);  
+        
+    }   
 }
 // Final round report
 const reportResults = () => {
@@ -155,7 +162,7 @@ const reportResults = () => {
     else {
         roundWinner = 'Computer';
     }    
-    let textContent = 'Round ' + gameRounds + ':  [<span>' + humanScore + '</span>] [<span>' + puterScore + '</span>] '+ roundWinner + ' wins.';
+    let textContent = '<span>Round ' + gameRounds + '</span>:  [<span>' + humanScore + '</span>] [<span>' + puterScore + '</span>] '+ roundWinner + ' wins.';
     appendResults(textContent);       
 }
 
