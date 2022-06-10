@@ -5,7 +5,6 @@ Simple RPS game in JS
 // a more elegant solution would be to use JSON. Should refactor this when I get to know JS better.
 let wins = ["rock scissors", "scissors paper", "paper rock", "rock scissors"];
 
-// Global variables
 let gameRounds = 0;
 let gameCnt = 0;
 let humanScore = 0;
@@ -31,12 +30,12 @@ let queryUserChoice = () => {
     const img = document.querySelector("#human-choice");
     return img.src.split('/').slice(-2).join('/');
 }
+
 let getFileNameOnly = (path) => {
     path = path.split('.')[0];            
     return path.split('/').slice(-1);
 }
 
-// Swap the image that refers to the human with the choice
 const setUserChoice = (choice) => {
     clearPuterChoice()
     choice = 'image/' + choice + '.png';
@@ -44,14 +43,12 @@ const setUserChoice = (choice) => {
     img.src = choice;
 }
 
-// resets the computer choice
 const clearPuterChoice = () => {
     choice = 'image/puter.png';
     const img = document.querySelector("#puter-choice");
     img.src = choice;
 }
 
-    // Swap the image that refers to the human with the choice
 let getPuterChoice = (choice) => {         
     let selection = '';
     if (choice === 1) {
@@ -68,7 +65,7 @@ let getPuterChoice = (choice) => {
     return selection;
 }
 
-//Play a round
+//Play the round
 const throwHands = () => {        
     gameCnt++;  
     //on game 6, report the results. 
@@ -79,7 +76,7 @@ const throwHands = () => {
     }        
     let userChoice = queryUserChoice();    
     if (userChoice === 'image/user.png') {
-        alert("Select your weapon To play.");
+        writeToStatus("Please <span>select a weapon</span>.");
         return;
     }
 
@@ -103,9 +100,7 @@ const newGame = () => {
     imgPuter.src = 'image/puter.png';
     puter_score.textContent = '0';
 
-    const resultContainer = document.querySelector('.status');
-    let msg = 'Select your weapon for a <span>NEW GAME</span>.';    
-    resultContainer.innerHTML = msg;
+    writeToStatus('&nbsp;&nbsp;<span>NEW GAME</span>?');
 }
 
 // checks winning profiles for the user to see if this profile matches.
@@ -124,20 +119,18 @@ const getWinner = (user, puter) => {
             curWinner = 'user';           
             break;                  
         }             
-    } 
-    
+    }     
     updateStatus(curWinner);    
     return curWinner;
 }
 
 const updateStatus = (winner) => {    
     //  display the current results.
-    const resultContainer = document.querySelector('.status');
     if (winner === 'puter') winner = 'Computer';
     if (winner === 'user') winner = 'Player';
     if (winner === 'tie') winner = 'Tie Game';
-    let msg = '<span>WINNER</span>: ['+ winner+ ']';    
-    resultContainer.innerHTML = msg;
+
+    writeToStatus('<span>WINNER</span>: ['+ winner+ ']');
 }
 
 const updateScore = (winner) => {
@@ -153,24 +146,28 @@ const updateScore = (winner) => {
         gameCnt--;       
     }    
 }
-
 // Final round report
 const reportResults = () => {
     gameRounds++;
-
     if (humanScore > puterScore) {
         roundWinner = "Player";
     }
     else {
         roundWinner = 'Computer';
     }    
-    let textContent = 'Round ' + gameRounds + ':  [' + humanScore + '] [' + puterScore + '] '+ roundWinner + ' wins.';
+    let textContent = 'Round ' + gameRounds + ':  [<span>' + humanScore + '</span>] [<span>' + puterScore + '</span>] '+ roundWinner + ' wins.';
+    appendResults(textContent);       
+}
 
-
+const writeToStatus = (message) => {
+    const resultContainer = document.querySelector('.status');
+    resultContainer.innerHTML = message;
+}
+const appendResults = (message) => {
     // add a div in the "results" section to display the results.
     const resultContainer = document.querySelector('.results');
     const content = document.createElement('div');
     content.classList.add('content');
-    content.textContent = textContent;
-    resultContainer.appendChild(content);    
+    content.innerHTML = message;
+    resultContainer.appendChild(content); 
 }
