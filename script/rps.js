@@ -3,7 +3,7 @@ Simple RPS game in JS
 */ 
 
 // a more elegant solution would be to use JSON. Should refactor this when I get to know JS better.
-let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png", "rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
+let wins = ["rock scissors", "scissors paper", "paper rock", , "rock scissors"];
 
 // Global variables
 let gameRounds = 0;
@@ -32,13 +32,8 @@ let queryUserChoice = () => {
     return img.src.split('/').slice(-2).join('/');
 }
 let getFileNameOnly = (path) => {
-    // This works to get the name and ext from a path
-    let fnameAndExt = path.split('/').slice(-1);
-    // The below expressioin causes an error
-    // stating that fnameAndExt is not a function?? It will not let me split
-    // the string and take the first item in the array.
-    // fnameAndExt.split('.')[0]; This would leave just the filename without extension.
-    return fnameAndExt; 
+    path = path.split('.')[0];            
+    return path.split('/').slice(-1);
 }
 
 // Swap the image that refers to the human with the choice
@@ -76,7 +71,7 @@ let getPuterChoice = (choice) => {
 //Play a round
 const throwHands = () => {        
     gameCnt++;  
-    //play to 6 but on;y counting for 5 games. 
+    //on game 6, report the results. 
     if (gameCnt === 6) {
         reportResults();
         newGame();
@@ -118,8 +113,9 @@ const newGame = () => {
 const getWinner = (user, puter) => {
     let curWinner = 'puter';    
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
+    console.log(profile)
     // checks all winning profiles 2X to make sure.
-    for (let i = 0;  i < 5; i++) {
+    for (let i = 0, l = wins.length;  i < l; i++) {
         if (user === puter) {           
             curWinner = 'tie';
             break;
