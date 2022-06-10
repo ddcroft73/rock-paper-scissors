@@ -2,7 +2,7 @@
 Simple RPS game in JS
 */ 
 
-
+// a more elegant solution would be to use JSON. Should refactor this when I get to know JS better.
 let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png", "rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
 
 // Global variables
@@ -37,7 +37,7 @@ let getFileNameOnly = (path) => {
     // The below expressioin causes an error
     // stating that fnameAndExt is not a function?? It will not let me split
     // the string and take the first item in the array.
-    //const choice = fnameAndExt.split('.')[0];
+    // fnameAndExt.split('.')[0]; This would leave just the filename without extension.
     return fnameAndExt; 
 }
 
@@ -118,6 +118,8 @@ const getWinner = (user, puter) => {
     // checks winning profiles for the user to see if this profile matches.
     // If no match or tie, computer wins.
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
+    alert(profile)
+    return;
     // checks all winning profiles 2X to make sure.
     for (let i = 0;  i < 5; i++) {
         if (user === puter) {           
