@@ -118,8 +118,6 @@ const getWinner = (user, puter) => {
     // checks winning profiles for the user to see if this profile matches.
     // If no match or tie, computer wins.
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
-    alert(profile)
-    return;
     // checks all winning profiles 2X to make sure.
     for (let i = 0;  i < 5; i++) {
         if (user === puter) {           
