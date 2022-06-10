@@ -2,189 +2,204 @@
 Simple RPS game in JS
 
 THis script should manupulate te DOM as well as house the logic
-for the game? Do I need separate scripts? 
-
-User can select their chpice by clicking and the chpice will be displayed 
-@ id="human-choice"
-
-
+User can select their choicce by clicking and the choice will be displayed
+Computer will randomy select when the user clicks "throw".
+Each win will be recorded up to 5 and the results will be displayed after
+each round
 */ 
 
-    // lookup table to detrmine win or lose.
-    // had to adjust the win array to contain file extensions, I can't seem to invoke split()
-    // on the results of a prior split.
-    let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
+// lookup table to detrmine win or lose.
+// had to adjust the win array to contain file extensions, I can't seem to invoke split()
+// on the results of a prior split.
+let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
 
-    // Global variables
-    let gameRounds = 0;
-    let gameCnt = 0;
-    let humanScore = 0;
-    let puterScore = 0;
-    let roundWinner = null;
+// Global variables
+let gameRounds = 0;
+let gameCnt = 0;
+let humanScore = 0;
+let puterScore = 0;
+let roundWinner = null;
 
-    // set up event listening    
-    const rock = document.querySelector('#rock');
-    const paper = document.querySelector('#paper');
-    const scissors = document.querySelector('#scissors');
-    const play =  document.querySelector('#play');
-    const clear = document.querySelector('#clear');
-    const human_score = document.querySelector('#human-score');
-    const puter_score = document.querySelector('#puter-score');
+// set up event listening    
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+const play =  document.querySelector('#play');
+const clear = document.querySelector('#clear');
+const human_score = document.querySelector('#human-score');
+const puter_score = document.querySelector('#puter-score');
 
-    rock.addEventListener('click', (e) => setUserChoice(e.target.id));
-    paper.addEventListener('click', (e) =>  setUserChoice(e.target.id));
-    scissors.addEventListener('click', (e) => setUserChoice(e.target.id));
-    play.addEventListener('click', () => throwHands());
-    clear.addEventListener('click', () => history.go(0));
+rock.addEventListener('click', (e) => setUserChoice(e.target.id));
+paper.addEventListener('click', (e) =>  setUserChoice(e.target.id));
+scissors.addEventListener('click', (e) => setUserChoice(e.target.id));
+play.addEventListener('click', () => throwHands());
+clear.addEventListener('click', () => history.go(0));
 
-       
-    let queryUserChoice = () => {
-        const img = document.querySelector("#human-choice");
-        // only return the file name and the folder name
-        return img.src.split('/').slice(-2).join('/');
-    }
-    let getFileNameOnly = (path) => {
-        // This works to get the name and ext from a path
-        let fnameAndExt = path.split('/').slice(-1);
-        // The below expressioin causes an error
-        // stating that fnameAndExt is not a function?? It will not let me split
-        // the string and take the first item in the array.
-        //const choice = fnameAndExt.split('.')[0];
-        return fnameAndExt; 
-    }
+    
+let queryUserChoice = () => {
+    const img = document.querySelector("#human-choice");
+    // only return the file name and the folder name
+    return img.src.split('/').slice(-2).join('/');
+}
+let getFileNameOnly = (path) => {
+    // This works to get the name and ext from a path
+    let fnameAndExt = path.split('/').slice(-1);
+    // The below expressioin causes an error
+    // stating that fnameAndExt is not a function?? It will not let me split
+    // the string and take the first item in the array.
+    //const choice = fnameAndExt.split('.')[0];
+    return fnameAndExt; 
+}
+
+// Swap the image that refers to the human with the choice
+const setUserChoice = (choice) => {
+    clearPuterChoice()
+    //const bg = document.querySelector('.choice');
+    // bg.style.cssText = 'background-color: rgb(251, 63, 5)';
+    choice = 'image/' + choice + '.png';
+    const img = document.querySelector("#human-choice");
+    img.src = choice;
+}
+
+// resets the computer choice
+const clearPuterChoice = () => {
+    choice = 'image/puter.png';
+    const img = document.querySelector("#puter-choice");
+    img.src = choice;
+}
 
     // Swap the image that refers to the human with the choice
-    const setUserChoice = (choice) => {
-        clearPuterChoice()
-        //const bg = document.querySelector('.choice');
-       // bg.style.cssText = 'background-color: rgb(251, 63, 5)';
+let getPuterChoice = (choice) => {         
+    let selection = '';
+    if (choice === 1) {
+        selection = 'image/rock.png';            
+    }
+    else if (choice === 2) {
+        selection = 'image/paper.png';
+    }
+    else if (choice  === 3) {
+        selection = 'image/scissors.png';
+    }     
+    const img = document.querySelector("#puter-choice");
+    img.src = selection;
+    return selection;
+}
 
-        choice = 'image/' + choice + '.png';
-        const img = document.querySelector("#human-choice");
-        img.src = choice;
-
+//Play a round
+const throwHands = () => {
+    // Only play 5 games        
+    if (gameCnt === 5) {
+        reportResults();
+        newGame();
+        return;
+    }        
+    //Make sure the user has selected.
+    let userChoice = queryUserChoice();    
+    if (userChoice === 'image/user.png') {
+        alert("Select your weapon To play.");
+        return;
     }
 
-    // resets the computer choice
-    const clearPuterChoice = () => {
-        choice = 'image/puter.png';
-        const img = document.querySelector("#puter-choice");
-        img.src = choice;
-    }
+    // Make random selection for computer
+    let selection = Math.floor(Math.random() * 3) + 1;                
+    let puterChoice = getPuterChoice(selection);
 
-     // Swap the image that refers to the human with the choice
-     let getPuterChoice = (choice) => {         
-        let selection = '';
-        if (choice === 1) {
-            selection = 'image/rock.png';            
-        }
-        else if (choice === 2) {
-            selection = 'image/paper.png';
-        }
-        else if (choice  === 3) {
-            selection = 'image/scissors.png';
-        }     
-        const img = document.querySelector("#puter-choice");
-        img.src = selection;
-        return selection;
-    }
+    let winner = getWinner(userChoice, puterChoice);
+    // update the score count off the game.
+    updateScore(winner);
+}
+    
+const newGame = () => {
+    gameCnt = 0;
+    humanScore = 0;
+    puterScore = 0;
 
-    //Play a round
-    const throwHands = () => {
-        // Only play 5 games        
-        if (gameCnt === 5) {
-            reportResults();
-            newGame();
-            return;
-        }        
-        //Make sure the user has selected.
-        let userChoice = queryUserChoice();
-        
-        if (userChoice === 'image/user.png') {
-            alert("Select your weapon To play.");
-            return;
-        }
-        // Make random selection for computer
-        let selection = Math.floor(Math.random() * 3) + 1;                
-        let puterChoice = getPuterChoice(selection);
+    const imgHuman = document.querySelector("#human-choice");
+    imgHuman.src = 'image/user.png';
+    human_score.textContent  = '0';
 
+    const imgPuter = document.querySelector("#puter-choice");        
+    imgPuter.src = 'image/puter.png';
+    puter_score.textContent = '0';
 
-        let winner = getWinner(userChoice, puterChoice);
-        // update the score count off the game.
-        updateScore(winner);
-    }
-     
-    const newGame = () => {
-        gameCnt = 0;
-        humanScore = 0;
-        puterScore = 0;
+    const resultContainer = document.querySelector('.status');
+    let msg = 'Select your weapon for a <span>NEW GAME</span>.';    
+    resultContainer.innerHTML = msg;
+}
 
-        const imgHuman = document.querySelector("#human-choice");
-        imgHuman.src = 'image/user.png';
-        human_score.textContent  = '0';
-
-        const imgPuter = document.querySelector("#puter-choice");        
-        imgPuter.src = 'image/puter.png';
-        puter_score.textContent = '0';
-    }
-
-    const getWinner = (user, puter) => {
-        // See if ther was a winner, or a tie. If there was a tie
-        // decrement the game counter.
-       
+const getWinner = (user, puter) => {
+    // See if ther was a winner, or a tie. If there was a tie
+    // decrement the game counter.
+    let curWinner = '';
+    
+    
+    const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
+    // check the defined wins in win[]. All wins are compared with the 
+    // user as first.
+    for (let i = 0, l = wins.length; i < l; i++) {
         if (user === puter) {           
-           return 'tie';
-        }
-
-        const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
-
-        // check the defined wins in win[]. All wins are compared with the 
-        // user as first.
-        for (let i = 0, l = wins.length; i < l; i++) {
-            if (profile === wins[i] ) {
-                return 'user';
-            }
-            else {
-                return 'puter'
-            }
+            curWinner = 'tie';
+            break;
         } 
+        if (profile === wins[i] ) {
+            curWinner = 'user';
+            break;
+        }
+        else{
+            curWinner = 'puter'
+            break;
+        }
+    } 
+
+    updateStatus(curWinner);
+    return curWinner;
+}
+
+const updateStatus = (winner) => {    
+    // add a div in the "status" section to display the results.
+    const resultContainer = document.querySelector('.status');
+    if (winner === 'puter') winner = 'Computer';
+    if (winner === 'user') winner = 'Player';
+    if (winner === 'tie') winner = 'Tie Game';
+    let msg = '<span>WINNER</span>: ['+ winner+ ']';    
+    resultContainer.innerHTML = msg;
+}
+
+// Updates the score and reports the results
+const updateScore = (winner) => {
+    if (winner === 'user' ) {
+        humanScore++;
+        human_score.textContent = humanScore;
+    }    
+    if (winner === 'puter') {
+        puterScore++;
+        puter_score.textContent = puterScore;
     }
+    gameCnt++;
 
-    // Updates the score and reports the results
-    const updateScore = (winner) => {
+    if (winner === 'tie') {
+        // disregard the count due to tie.
+        gameCnt--;       
+    }
+}
 
-       if (winner === 'user' ) {
-           humanScore++;
-           human_score.textContent = humanScore;
-       }    
-       if (winner === 'puter') {
-           puterScore++;
-           puter_score.textContent = puterScore;
-       }
-       gameCnt++;
+// Final round report
+const reportResults = () => {
+    gameRounds++;
 
-       if (winner === 'tie') gameCnt--;       
-       
+    if (humanScore > puterScore) {
+        roundWinner = "Player";
+    }
+    else {
+        roundWinner = 'Computer';
     }
     
-    // Final round report
-    const reportResults = () => {
-       gameRounds++;
-
-       if (humanScore > puterScore) {
-           roundWinner = "Human";
-       }
-       else {
-           roundWinner = 'Computer';
-       }
-       
-       let textContent = 'Round ' + gameRounds + ':  [' + humanScore + '] [' + puterScore + '] '+ roundWinner + ' wins.';
-       
-       // add a div in the "results" section to display the results.
-       const resultContainer = document.querySelector('.results');
-       const content = document.createElement('div');
-       content.classList.add('content');
-       content.textContent = textContent;
-       resultContainer.appendChild(content);
-       
-    }
+    let textContent = 'Round ' + gameRounds + ':  [' + humanScore + '] [' + puterScore + '] '+ roundWinner + ' wins.';
+    
+    // add a div in the "results" section to display the results.
+    const resultContainer = document.querySelector('.results');
+    const content = document.createElement('div');
+    content.classList.add('content');
+    content.textContent = textContent;
+    resultContainer.appendChild(content);    
+}
