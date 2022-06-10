@@ -126,7 +126,12 @@ const updateStatus = (winner) => {
     if (winner === 'user')  winner = 'Player';
     if (winner === 'tie')   winner = 'Tie Game';
 
-    writeToStatus('<span>WINNER</span>: [<span>'+ winner+ '</span>]');
+    
+    if (gameCnt === 3) {
+        writeToStatus('<span>Last Point...</span>: [<span>Who will it be?!</span>]');        
+    } else {
+        writeToStatus('<span>WINNER</span>: [<span>'+ winner+ '</span>]');
+    }
 }
 
 const updateScore = (winner) => {
