@@ -1,11 +1,5 @@
 /*
 Simple RPS game in JS
-
-THis script should manupulate te DOM as well as house the logic
-User can select their choicce by clicking and the choice will be displayed
-Computer will randomy select when the user clicks "throw".
-Each win will be recorded up to 5 and the results will be displayed after
-each round
 */ 
 
 
