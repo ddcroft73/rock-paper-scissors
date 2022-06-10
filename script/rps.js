@@ -10,6 +10,9 @@ let gameRounds = 0;
 let gameCnt = 0;
 let humanScore = 0;
 let puterScore = 0;
+let humanScore_running = 0;
+let puterScore_running = 0;
+
 let roundWinner = null;
 
 const rock = document.querySelector('#rock');
@@ -19,6 +22,7 @@ const play =  document.querySelector('#play');
 const clear = document.querySelector('#clear');
 const human_score = document.querySelector('#human-score');
 const puter_score = document.querySelector('#puter-score');
+
 
 rock.addEventListener('click', (e) => setUserChoice(e.target.id));
 paper.addEventListener('click', (e) =>  setUserChoice(e.target.id));
@@ -67,18 +71,19 @@ let getPuterChoice = (choice) => {
 }
 
 //Play the round
-const throwHands = () => {        
-    
+const throwHands = () => {           
+    gameCnt++;  
     let userChoice = queryUserChoice();    
     if (userChoice === 'image/user.png') {
-        writeToStatus("Please <span>select a weapon</span>.");
+        statusReport("Please <span>select a weapon</span>.");
         return;
     }
     // didnt overthink the AI in this. 
     let selection = Math.floor(Math.random() * 3) + 1;                
     let puterChoice = getPuterChoice(selection);
-    let winner = getWinner(userChoice, puterChoice);
-    updateScore(winner);
+    let winner = getWinner(userChoice, puterChoice);  
+    let trueGameCount = updateScore(winner); 
+    updateStatus(winner, trueGameCount); 
 }
     
 const newGame = () => {
@@ -98,7 +103,7 @@ const newGame = () => {
     imgPuter.src = 'image/puter.png';
     puter_score.textContent = '0';
 
-    writeToStatus('&nbsp;&nbsp;<span>NEW GAME</span>?');
+    statusReport('&nbsp;&nbsp;<span>NEW GAME</span>?');
 }
 
 //defined an object with any profile where the user will win. Compare that to the current
@@ -119,28 +124,28 @@ const getWinner = (user, puter) => {
             break;                  
         }  
     }
-
-    updateStatus(curWinner);    
+    //updateStatus(winner);  
     return curWinner;
 }
 
-const updateStatus = (winner) => {    
+const updateStatus = (winner, actualGameCount) => {    
     //  display the current results on the last game played.
     if (winner === 'puter') winner = 'Computer';
     if (winner === 'user')  winner = 'Player';
     if (winner === 'tie')   winner = 'Tie Game';
 
-    
-    if (gameCnt === 3) {
-        writeToStatus('<span>Last Point...</span>: [<span>Who will it be?!</span>]');        
+    //  if the game is in the last round display a last round message. If the next round is a tie
+    //  continue to display the last round message.     
+    if (actualGameCount === 4) { // actualGameCount gives a true real time count vs gameCnt which can lag.
+        statusReport('<span>Last Point</span>!!: [<span>Who will it be?!</span>] ' );    
+    } else if(actualGameCount === 5 && actualGameCount === 'Tie Game') {   
+        statusReport('<span>Last Point...</span>: [<span>but it was a tie!</span>] ');     
     } else {
-        writeToStatus('<span>WINNER</span>: [<span>'+ winner+ '</span>]');
-    }
+        statusReport('<span>WINNER</span>: [<span>'+ winner+ '</span>]');
+    }    
 }
 
-const updateScore = (winner) => {
-    gameCnt++;           
-    
+const updateScore = (winner) => { 
     if (winner === 'user' ) {
         humanScore++;
         human_score.textContent = humanScore;
@@ -148,34 +153,41 @@ const updateScore = (winner) => {
     if (winner === 'puter') {
         puterScore++;
         puter_score.textContent = puterScore;
-    }
+    }    
     if (winner === 'tie') {
         gameCnt--;       
-    }    
+    } 
 
     //on game 5, report the results. 
-    if (gameCnt == 5) {
+    if (gameCnt === 5) {
         reportResults();    
         // give the user a second to see the last results before resetting.
         document.getElementById("play").disabled = true; 
-        setTimeout(newGame, 1500);  
-        
-    }   
+        setTimeout(newGame, 1500);          
+    }       
+    
+    return humanScore + puterScore;
 }
-// Final round report
+
+// Final report after the race to 5.
 const reportResults = () => {
     gameRounds++;
     if (humanScore > puterScore) {
         roundWinner = "Player";
+        humanScore_running++;
     }
     else {
         roundWinner = 'Computer';
+        puterScore_running++;
     }    
     let textContent = '<span>Round ' + gameRounds + '</span>:  [<span>' + humanScore + '</span>] [<span>' + puterScore + '</span>] '+ roundWinner + ' wins.';
+    
     appendResults(textContent);       
+    showMatchResults();
+    
 }
 
-const writeToStatus = (message) => {
+const statusReport = (message) => {
     const resultContainer = document.querySelector('.status');
     resultContainer.innerHTML = message;
 }
@@ -186,4 +198,32 @@ const appendResults = (message) => {
     content.classList.add('content');
     content.innerHTML = message;
     resultContainer.appendChild(content); 
+    // auto scroll with the data
+    resultContainer.scrollTop = resultContainer.scrollHeight;
+}
+
+/**
+ * if gameRounds is divisible by 3 see what the scores are and make a report. 
+ */
+const showMatchResults = () => {    
+    let message = '';
+
+     if (gameRounds % 3 === 0)  {
+        if (puterScore_running > humanScore_running) {
+             message = '<span>The computer has you by</span> ' + ((puterScore_running - humanScore_running)) + ' <span>games</span>.';   
+             statusReport(message);
+        } else if (humanScore_running > puterScore_running){
+            message ='<span>Your\'e in the lead! </span> ' + ((humanScore_running - puterScore_running)) + ' <span>games</span>.';
+            statusReport(message);
+        }else if (humanScore_running === puterScore_running){
+            message = '<span>The Match is tied up </span> [<span>' + humanScore_running+ '</span>] to [<span>' + puterScore_running +'</span>]!';
+            statusReport(message);
+        }
+     }    
+
+     appendResults(message);
+}
+
+let trueGameCount = () => {
+
 }
