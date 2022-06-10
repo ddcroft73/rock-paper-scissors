@@ -8,9 +8,7 @@ Each win will be recorded up to 5 and the results will be displayed after
 each round
 */ 
 
-// lookup table to detrmine win or lose.
-// had to adjust the win array to contain file extensions, I can't seem to invoke split()
-// on the results of a prior split.
+
 let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
 
 // Global variables
@@ -20,7 +18,6 @@ let humanScore = 0;
 let puterScore = 0;
 let roundWinner = null;
 
-// set up event listening    
 const rock = document.querySelector('#rock');
 const paper = document.querySelector('#paper');
 const scissors = document.querySelector('#scissors');
@@ -38,7 +35,6 @@ clear.addEventListener('click', () => history.go(0));
     
 let queryUserChoice = () => {
     const img = document.querySelector("#human-choice");
-    // only return the file name and the folder name
     return img.src.split('/').slice(-2).join('/');
 }
 let getFileNameOnly = (path) => {
@@ -54,8 +50,6 @@ let getFileNameOnly = (path) => {
 // Swap the image that refers to the human with the choice
 const setUserChoice = (choice) => {
     clearPuterChoice()
-    //const bg = document.querySelector('.choice');
-    // bg.style.cssText = 'background-color: rgb(251, 63, 5)';
     choice = 'image/' + choice + '.png';
     const img = document.querySelector("#human-choice");
     img.src = choice;
@@ -100,12 +94,10 @@ const throwHands = () => {
         return;
     }
 
-    // Make random selection for computer
     let selection = Math.floor(Math.random() * 3) + 1;                
     let puterChoice = getPuterChoice(selection);
 
     let winner = getWinner(userChoice, puterChoice);
-    // update the score count off the game.
     updateScore(winner);
 }
     
@@ -127,15 +119,11 @@ const newGame = () => {
     resultContainer.innerHTML = msg;
 }
 
+// THis logic is flawed. Spend mre time on this.
 const getWinner = (user, puter) => {
-    // See if ther was a winner, or a tie. If there was a tie
-    // decrement the game counter.
-    let curWinner = '';
-    
+    let curWinner = '';    
     
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
-    // check the defined wins in win[]. All wins are compared with the 
-    // user as first.
     for (let i = 0, l = wins.length; i < l; i++) {
         if (user === puter) {           
             curWinner = 'tie';
@@ -150,13 +138,12 @@ const getWinner = (user, puter) => {
             break;
         }
     } 
-
     updateStatus(curWinner);
     return curWinner;
 }
 
 const updateStatus = (winner) => {    
-    // add a div in the "status" section to display the results.
+    //  display the current results.
     const resultContainer = document.querySelector('.status');
     if (winner === 'puter') winner = 'Computer';
     if (winner === 'user') winner = 'Player';
@@ -165,7 +152,6 @@ const updateStatus = (winner) => {
     resultContainer.innerHTML = msg;
 }
 
-// Updates the score and reports the results
 const updateScore = (winner) => {
     if (winner === 'user' ) {
         humanScore++;
@@ -192,10 +178,8 @@ const reportResults = () => {
     }
     else {
         roundWinner = 'Computer';
-    }
-    
+    }    
     let textContent = 'Round ' + gameRounds + ':  [' + humanScore + '] [' + puterScore + '] '+ roundWinner + ' wins.';
-    
     // add a div in the "results" section to display the results.
     const resultContainer = document.querySelector('.results');
     const content = document.createElement('div');
