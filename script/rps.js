@@ -3,7 +3,7 @@ Simple RPS game in JS
 */ 
 
 // a more elegant solution would be to use JSON. Should refactor this when I get to know JS better.
-let wins = ["rock scissors", "scissors paper", "paper rock", , "rock scissors"];
+let wins = ["rock scissors", "scissors paper", "paper rock", "rock scissors"];
 
 // Global variables
 let gameRounds = 0;
