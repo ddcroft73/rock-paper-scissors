@@ -101,16 +101,14 @@ const newGame = () => {
     writeToStatus('&nbsp;&nbsp;<span>NEW GAME</span>?');
 }
 
-// an array of wins for the user is defined in wins[]. Loops thorugh the array and checks 
-// to see if the user one. If not the computer won or there was a tie.
+//defined an object with any profile where the user will win. Compare that to the current
+// profile of user vs puter. If the user didn't win and there was not a tie. Computer won.
 const getWinner = (user, puter) => {
     let curWinner = 'puter';    
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
     
     for (var i = 0, l = profiles.userWins.length; i < l; i++) {
         let win = profiles.userWins[i];
-
-        console.log(win);
 
         if (user === puter) {           
             curWinner = 'tie';
@@ -122,16 +120,6 @@ const getWinner = (user, puter) => {
         }  
     }
 
-    /*for (let i = 0, l = wins.length;  i < l; i++) {
-        if (user === puter) {           
-            curWinner = 'tie';
-            break;
-        } 
-        if (profile === wins[i] ) {
-            curWinner = 'user';           
-            break;                  
-        }             
-    }     */
     updateStatus(curWinner);    
     return curWinner;
 }
