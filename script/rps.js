@@ -9,7 +9,7 @@ each round
 */ 
 
 
-let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
+let wins = ["rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png", "rock.png scissors.png", "scissors.png paper.png", "paper.png rock.png"];
 
 // Global variables
 let gameRounds = 0;
@@ -87,7 +87,7 @@ const throwHands = () => {
         newGame();
         return;
     }        
-    //Make sure the user has selected.
+    
     let userChoice = queryUserChoice();    
     if (userChoice === 'image/user.png') {
         alert("Select your weapon To play.");
@@ -121,23 +121,22 @@ const newGame = () => {
 
 // THis logic is flawed. Spend mre time on this.
 const getWinner = (user, puter) => {
-    let curWinner = '';    
+    // assume computer will win, until otherwise proven.
+    let curWinner = 'puter';    
     
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
-    for (let i = 0, l = wins.length; i < l; i++) {
+    
+    for (let i = 0;  i < 5; i++) {
         if (user === puter) {           
             curWinner = 'tie';
             break;
         } 
         if (profile === wins[i] ) {
-            curWinner = 'user';
-            break;
-        }
-        else{
-            curWinner = 'puter'
-            break;
-        }
+            curWinner = 'user';           
+            break;                  
+        }             
     } 
+    
     updateStatus(curWinner);
     return curWinner;
 }
