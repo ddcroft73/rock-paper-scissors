@@ -2,8 +2,9 @@
 Simple RPS game in JS
 */ 
 
-// a more elegant solution would be to use JSON. Should refactor this when I get to know JS better.
-let wins = ["rock scissors", "scissors paper", "paper rock", "rock scissors"];
+const profiles = {
+    "userWins": ["rock scissors", "scissors paper", "paper rock"]
+};
 
 let gameRounds = 0;
 let gameCnt = 0;
@@ -106,7 +107,22 @@ const getWinner = (user, puter) => {
     let curWinner = 'puter';    
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(puter);
     
-    for (let i = 0, l = wins.length;  i < l; i++) {
+    for (var i = 0, l = profiles.userWins.length; i < l; i++) {
+        let win = profiles.userWins[i];
+
+        console.log(win);
+
+        if (user === puter) {           
+            curWinner = 'tie';
+            break;
+        } 
+        if (profile === win ) {
+            curWinner = 'user';           
+            break;                  
+        }  
+    }
+
+    /*for (let i = 0, l = wins.length;  i < l; i++) {
         if (user === puter) {           
             curWinner = 'tie';
             break;
@@ -115,7 +131,7 @@ const getWinner = (user, puter) => {
             curWinner = 'user';           
             break;                  
         }             
-    }     
+    }     */
     updateStatus(curWinner);    
     return curWinner;
 }
