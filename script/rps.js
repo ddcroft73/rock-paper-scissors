@@ -19,7 +19,7 @@ const rock = document.querySelector('#rock');
 const paper = document.querySelector('#paper');
 const scissors = document.querySelector('#scissors');
 const play =  document.querySelector('#play');
-const clear = document.querySelector('#clear');
+//const clear = document.querySelector('#clear');
 const human_score = document.querySelector('#human-score');
 const puter_score = document.querySelector('#puter-score');
 
@@ -28,7 +28,7 @@ rock.addEventListener('click', (e) => setUserChoice(e.target.id));
 paper.addEventListener('click', (e) =>  setUserChoice(e.target.id));
 scissors.addEventListener('click', (e) => setUserChoice(e.target.id));
 play.addEventListener('click', () => throwHands());
-clear.addEventListener('click', () => history.go(0));
+//clear.addEventListener('click', () => history.go(0));
 
     
 let queryUserChoice = () => {
