@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <!--<script src="rps.js"></script> -->
+    <title>Rock Paper Scissors</title>
+</head>
+<body>
+    <!--A simple Rock Paper Scissors game against the computer in html css and JS-->
+    <div class ="main-container">
+         <div class="centered-container">
+            <!--<div id="test" class="instructions">
+             Best out of five. Select your weapon by clicking the icon, then click throw when youre ready. Smart AI includes <span>if</span> and <span>else</span>, and don't forget <span>random</span>! Try your luck and see who wins!
+            </div>-->
+            
+            <div class="label-selection">Select your weapon:</div>
+            <div class="rps-container">
+                <div class="weapons">
+                    <img id="rock" src="image/rock.png" width="60">
+                </div>
+                <div class="weapons" >
+                    <img id="paper" src="image/paper.png" width="60">
+                </div>
+                <div class="weapons" >
+                    <img id="scissors" src="image/scissors.png" width="60">
+                </div>
+            </div>        
+            
+            <div class="label-container">
+                <div class="label-inner-container">
+                    <div class="choice-label-human">Player:</div>
+                    <div class="choice-label-computer">Puter:</div>
+                </div>                 
+                <div class="label-inner-container">
+                    <div class="score-labe-human">Player:</div>
+                    <div class="score-label-computer">Puter:</div>
+                </div>
+            </div>
+
+            <div class="score-choice-container">                
+               <div class="choice-container">
+                   <div class="choice" ><img id="human-choice" src="image/user.png" width="40"></div>
+                   <div class="choice"><img id="puter-choice" src="image/puter.png" width="40"></div>
+               </div>
+               <div class="score-container">
+                    <div class="score" id="human-score">0</div>
+                    <div class="score" id="puter-score">0</div>
+               </div>
+            </div>
+
+            <div class="button-container">
+                <button id="play">Throw</button>
+                <button id="clear">Clear</button>
+            </div>
+
+            <div class="results">
+                <!--THis area will be dynamically updated using JS-->
+            </div>
+         </div>
+    </div>
+
+<script src="script/rps.js" type="text/javascript">
+
+    
+</script>    
+
+</body>
+</html>
