@@ -212,13 +212,16 @@ const showMatchResults = () => {
 
      if (gameRounds % 3 === 0)  {
         if (puterScore_running > humanScore_running) {
+
             if (puterScore_running > (humanScore_running+1)) {
                modifier = 's';
             }
-
              message = '<span>The computer has you by</span> ' + ((puterScore_running - humanScore_running)) + ' <span>game' +modifier +'</span>.';   
              statusReport(message);
         } else if (humanScore_running > puterScore_running){
+            if (humanScore_running > (puterScore_running+1)) {
+                modifier = 's';
+             } 
             message ='<span>Your\'e in the lead! </span> ' + ((humanScore_running - puterScore_running)) + ' <span>game' +modifier +'</span>.';
             statusReport(message);
         }else if (humanScore_running === puterScore_running){
