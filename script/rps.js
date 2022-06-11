@@ -207,16 +207,22 @@ const appendResults = (message) => {
  */
 const showMatchResults = () => {    
     let message = '';
+    let modifier = '';
+
 
      if (gameRounds % 3 === 0)  {
         if (puterScore_running > humanScore_running) {
-             message = '<span>The computer has you by</span> ' + ((puterScore_running - humanScore_running)) + ' <span>games</span>.';   
+            if (puterScore_running > (humanScore_running+1)) {
+               modifier = 's';
+            }
+
+             message = '<span>The computer has you by</span> ' + ((puterScore_running - humanScore_running)) + ' <span>game' +modifier +'</span>.';   
              statusReport(message);
         } else if (humanScore_running > puterScore_running){
-            message ='<span>Your\'e in the lead! </span> ' + ((humanScore_running - puterScore_running)) + ' <span>games</span>.';
+            message ='<span>Your\'e in the lead! </span> ' + ((humanScore_running - puterScore_running)) + ' <span>game' +modifier +'</span>.';
             statusReport(message);
         }else if (humanScore_running === puterScore_running){
-            message = '<span>The Match is tied up </span> [<span>' + humanScore_running+ '</span>] to [<span>' + puterScore_running +'</span>]!';
+            message = '<span>The Match is tied up </span> [<span>' + humanScore_running+ '</span>] <span>to</span> [<span>' + puterScore_running +'</span>]!';
             statusReport(message);
         }
      }    
