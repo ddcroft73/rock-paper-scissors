@@ -225,7 +225,7 @@ button:active {
     height: 25px;
     margin: 5px;
     padding-left: 10px;
-    border-radius: 8px;
+    border-radius: 5px;
 }
 
 .results {
@@ -236,7 +236,7 @@ button:active {
     width: 98%;
     margin: 5px;
     height: 100px;
-    border-radius: 15px;
+    border-radius: 8px;
     padding-top: 5px;
     padding-left: 10px;
     margin-top: 0px;
