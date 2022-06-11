@@ -216,8 +216,7 @@ button {
     border-left: 1px solid rgb(255, 42, 0);
     border-bottom: 1px solid rgb(63, 31, 21);
     border-right: 1px solid rgb(63, 31, 21);
-    
-   /* border: 1px solid rgb(251, 63, 5);*/
+   /* border: 1px solid rgb(251, 63, 5);*/  
 }
 button:active {
     border-top: 1px solid  rgb(63, 31, 21);
@@ -237,6 +236,7 @@ button:active {
     margin: 5px;
     padding-left: 10px;
     border-radius: 5px;
+    background-color: rgb(212, 211, 211);
 }
 
 .results {
@@ -252,5 +252,6 @@ button:active {
     padding-left: 10px;
     margin-top: 0px;
     overflow-y: scroll;
+    background-color: rgb(212, 211, 211);
 }
 
