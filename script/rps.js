@@ -103,7 +103,7 @@ const newGame = () => {
     imgPuter.src = 'image/puter.png';
     puter_score.textContent = '0';
 
-    statusReport('&nbsp;&nbsp;<span>NEW GAME</span>?');
+    statusReport('<span>NEW GAME</span>?');
 }
 
 //defined an object with any profile where the user will win. Compare that to the current

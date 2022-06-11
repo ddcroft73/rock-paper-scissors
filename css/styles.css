@@ -157,8 +157,8 @@ img[width="40"]{
 
 }
 
-.choice, .score {    
-    color: rgb(251, 63, 5);
+.h-choice, .h-score, .choice, .score, .p-choice, .p-score{    
+    color: black;/*rgb(251, 63, 5);*/
     background-color: rgb(183, 185, 191);
     display: flex;
     border: 1px solid rgb(10, 10, 10);
@@ -171,9 +171,20 @@ img[width="40"]{
     margin-right: 10px;
     text-align: center;
     align-items: center;
-    justify-content: center;
+    justify-content: center;  
 }
-
+#human-choice, .h-choice{
+    background-color: rgb(159, 120, 98);/*rgb(212, 211, 211); */  
+}
+#puter-choice, .p-choice{    
+    background-color: rgba(167, 168, 99, 0.649);/*rgb(212, 211, 211); */
+}
+#human-score {
+    background-color: rgb(159, 120, 98);/*rgb(212, 211, 211); */  
+}
+#puter-score {    
+    background-color: rgba(167, 168, 99, 0.649);/*rgb(212, 211, 211); */
+}
 .instructions {
     color: rgb(11, 11, 197);
     background-color: rgb(212, 211, 211);
@@ -213,7 +224,7 @@ button:active {
     border-left: 1px solid  rgb(63, 31, 21);
     border-bottom: 1px solid rgb(255, 42, 0);
     border-right: 1px solid rgb(255, 42, 0);
-    color: white;
+    color: rgb(251, 63, 5);
 
 }
 .status {
