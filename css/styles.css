@@ -169,7 +169,7 @@ img[width="40"]{
 
 }
 
-.h-choice, .h-score, .choice, .score, .p-choice, .p-score{    
+.h-choice,  .p-choice, .h-score, .p-score{    /**/
     color: black;/*rgb(251, 63, 5);*/
     background-color: rgb(183, 185, 191);
     display: flex;
@@ -185,16 +185,16 @@ img[width="40"]{
     align-items: center;
     justify-content: center;  
 }
-#human-choice, .h-choice{
+#human-choice, .h-choice, .h-score{ /**/
     background-color: rgb(159, 120, 98);/*rgb(212, 211, 211); */  
 }
-.h-choice {
+.h-choice, .h-score { /**/
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-#puter-choice, .p-choice{    
+#puter-choice, .p-choice, .p-score{    /**/
     background-color: rgba(167, 168, 99, 0.649);/*rgb(212, 211, 211); */;
 }
-.p-choice {    
+.p-choice, .p-score {    /**/
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #human-score {

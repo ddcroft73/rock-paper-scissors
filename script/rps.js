@@ -85,7 +85,7 @@ const throwHands = () => {
         return;
     }
     // highlight player when selection is made.
-    highLightPlayerIcon("div.h-choice", "#human-choice", 30);
+    highLightPlayerIcon("div.h-choice", "#human-choice", 30, 'rgb(159, 120, 98)', 'rgb(209, 180, 163)');
 
     // didnt overthink the AI on this. 
     let selection = computerMove();       
@@ -180,12 +180,12 @@ const updateScore = (winner) => {
     if (winner === 'user' ) {
         humanScore++;
         human_score.textContent = humanScore;
-        highLightPlayerIcon("div.score", "#human-score", 30);
+        highLightPlayerIcon("div.h-score", "#human-score", 30, 'rgb(159, 120, 98)', 'rgb(209, 180, 163)');
     }    
     if (winner === 'puter') {        
         computerScore++;
         computer_score.textContent = computerScore;
-        highLightPlayerIcon("div.score", "#human-score", 30);
+        highLightPlayerIcon("div.p-score", "#puter-score", 30, 'rgba(167, 168, 99, 0.649)', 'rgba(214, 214, 177, 0.649)');
     }    
     if (winner === 'tie') {
         gameCnt--;       
@@ -270,14 +270,15 @@ const showMatchResults = () => {
 /*
  * highlights one of 2 seperate image div combos for a short time to enhance the click effect.
  */
-const highLightPlayerIcon = (div, image, time) => {
+const highLightPlayerIcon = (div, image, time, original, hilight) => {
+
     const changeBack = () => {
-     document.querySelector(div).style.backgroundColor = 'rgb(159, 120, 98)';
-     document.querySelector(image).style.backgroundColor = 'rgb(159, 120, 98)';
+     document.querySelector(div).style.backgroundColor = original;
+     document.querySelector(image).style.backgroundColor = original;
     }
     // Highlight
-    document.querySelector(div).style.backgroundColor = 'rgb(209, 180, 163)';
-    document.querySelector(image).style.backgroundColor = 'rgb(209, 180, 163)';
+    document.querySelector(div).style.backgroundColor = hilight;
+    document.querySelector(image).style.backgroundColor = hilight;
     //change back
     setTimeout(changeBack, time);
  }
@@ -290,7 +291,16 @@ const highLightPlayerIcon = (div, image, time) => {
  const strobeEffect =( winner, duration, strobe) => {
     //
     let div = '';
-    let icon = '';
+    let image = '';
+
+    let humanColor = 'rgb(159, 120, 98)';
+    let humanHColor = 'rgb(209, 180, 163)';
+
+    let puterColor = 'rgba(167, 168, 99, 0.649)';    
+    let puterHColor = 'rgba(214, 214, 177, 0.649)';
+    
+    let original = '';
+    let hiColor = '';
 
     const stop = () => {
         clearInterval(myInterval);
@@ -299,13 +309,20 @@ const highLightPlayerIcon = (div, image, time) => {
     console.log(winner)
     if (winner === 'Player') {
        div = 'div.h-choice';
-       icon ='#human-choice';
+       image ='#human-choice';
+       original = humanColor;
+       hiColor = humanHColor;
+       
+    
     } else {
         div = 'div.p-choice';
-        icon ='#puter-choice';
+        image ='#puter-choice';
+        original = puterColor;
+        hiColor = puterHColor;
     }
-    const myInterval = setInterval(function () {highLightPlayerIcon(div, icon, 50)} , strobe)
-    setTimeout(stop, duration);
-            
 
+    const myInterval = setInterval(function () {highLightPlayerIcon(div, image, 50, original, hiColor)}, strobe);
+      
+    setTimeout(stop, duration);
  }
+ 
