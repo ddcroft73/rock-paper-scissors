@@ -28,6 +28,8 @@ span {
     background-color: rgb(201, 188, 188);
     padding: 10px;
     margin: 20px;
+    box-shadow: 0px 10px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
 }
 
 .rps-container {
@@ -73,7 +75,16 @@ span {
     margin: 10px;
     height: 100px;
     width: 100px;
+   
+  
+}
+.weapons:hover {
+    box-shadow: 0px 10px 8px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: rgb(222, 224, 232);
+}
 
+.weapons:active {    
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 img[width="60"] {
@@ -140,6 +151,7 @@ img[width="40"]{
     display: flex;
     margin-top: 5px;
     margin-left: 0px;
+    
 }
 
 .score-labe-human, .score-label-computer {
@@ -154,6 +166,7 @@ img[width="40"]{
     justify-content: space-evenly; /**/
     width: 100%;
     margin: 5px;
+  
 
 }
 
@@ -176,14 +189,22 @@ img[width="40"]{
 #human-choice, .h-choice{
     background-color: rgb(159, 120, 98);/*rgb(212, 211, 211); */  
 }
+.h-choice {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 #puter-choice, .p-choice{    
-    background-color: rgba(167, 168, 99, 0.649);/*rgb(212, 211, 211); */
+    background-color: rgba(167, 168, 99, 0.649);/*rgb(212, 211, 211); */;
+}
+.p-choice {    
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #human-score {
     background-color: rgb(159, 120, 98);/*rgb(212, 211, 211); */  
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #puter-score {    
     background-color: rgba(167, 168, 99, 0.649);/*rgb(212, 211, 211); */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .instructions {
     color: rgb(11, 11, 197);
@@ -253,5 +274,7 @@ button:active {
     margin-top: 0px;
     overflow-y: scroll;
     background-color: rgb(212, 211, 211);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
 }
 

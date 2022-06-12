@@ -1,10 +1,24 @@
 /*
 Simple RPS game in JS
+
+BUG Every now and the the game count will go berzerk and the game is ended prematurely.
+I'd fix it but moving on. A problem due to poor program design. 
+ 
+
 */ 
 
 const profiles = {
     "userWins": ["rock scissors", "scissors paper", "paper rock"]
 };
+
+( () => {
+    console.log(
+`execute once... but why? think of a reason to 
+have a start up function... 
+I  had one. I did not know you could
+break up a string loike this when using 
+back ticks... shit, no line break or nothing`);
+})();
 
 let gameRounds = 0;
 let gameCnt = 0;
@@ -33,11 +47,6 @@ play.addEventListener('click', () => throwHands());
 let queryUserChoice = () => {
     const img = document.querySelector("#human-choice");
     return img.src.split('/').slice(-2).join('/');
-}
-
-let getFileNameOnly = (path) => {
-    path = path.split('.')[0];            
-    return path.split('/').slice(-1);
 }
 
 const setUserChoice = (choice) => {
@@ -72,20 +81,23 @@ let getComputerChoice = (choice) => {
 //Play a round
 const throwHands = () => {           
     gameCnt++;  
-
+    
     let userChoice = queryUserChoice();    
     if (userChoice === 'image/user.png') {
         statusReport("Please <span>select a weapon</span>.");
         return;
     }
+    // highlight player for effect.
+    highLightPlayerIcon("div.h-choice", "#human-choice", 30);
+
     // didnt overthink the AI on this. 
     let selection = Math.floor(Math.random() * 3) + 1;                
     let computerChoice = getComputerChoice(selection);
     let winner = getWinner(userChoice, computerChoice);      
     let trueGameCount = updateScore(winner); 
     updateStatus(winner, trueGameCount); 
-}
-    
+}   
+
 const newGame = () => {
 
     gameCnt = 0;
@@ -109,6 +121,10 @@ const newGame = () => {
 // defined an object with any profile where the user will win. Compare that to the current
 // profile of user vs puter. If the user didn't win and there was not a tie. Computer won.
 const getWinner = (user, computer) => {
+    let getFileNameOnly = (path) => {
+        path = path.split('.')[0];            
+        return path.split('/').slice(-1);
+    }
     let curWinner = 'puter';    
     const profile = getFileNameOnly(user) + ' ' + getFileNameOnly(computer);
     
@@ -133,15 +149,25 @@ const updateStatus = (winner, actualGameCount) => {
     if (winner === 'user')  winner = 'Player';
     if (winner === 'tie')   winner = 'Tie Game';
 
-    //  if the game is in the last round display a last round message. If the next round is a tie
-    //  continue to display the last round message.     
-
+console.log(humanScore + ', ' + computerScore);
     if (actualGameCount === 4) { 
-        statusReport('<span>Last Point</span>!!: [<span>Who will it be?!</span>] ' );    
+        // whomever is a head the most gets a poke.
+        // see whose ahead, and lean towards the winner.
+        
+        if (computerScore > humanScore) {
+            statusReport('<span>Last Point</span>!!: [<span>The computer has you!</span>] ' );
+        }  else if (humanScore > computerScore) {
+            statusReport('<span>Last Point</span>!!: [<span>You got this!</span>] ' );
+        } else {
+            statusReport('<span>Last Point</span>!!: [<span>Who will it be?!</span>] ' );  
+        }        
     } else if(actualGameCount === 5 && actualGameCount === 'Tie Game') {   
         statusReport('<span>Last Point...</span>: [<span>but it was a tie!</span>] ');     
     } else {
         statusReport('<span>WINNER</span>: [<span>'+ winner+ '</span>]');
+        if (computerScore === (computerScore + humanScore) && (computerScore + humanScore) === 3 ) {
+            statusReport('<span>Geez man... Not even one game out of 3? </span>');
+        }
     }    
 }
 
@@ -149,10 +175,12 @@ const updateScore = (winner) => {
     if (winner === 'user' ) {
         humanScore++;
         human_score.textContent = humanScore;
+        highLightPlayerIcon("div.score", "#human-score", 30);
     }    
-    if (winner === 'puter') {
+    if (winner === 'puter') {        
         computerScore++;
         computer_score.textContent = computerScore;
+        highLightPlayerIcon("div.score", "#human-score", 30);
     }    
     if (winner === 'tie') {
         gameCnt--;       
@@ -164,13 +192,12 @@ const updateScore = (winner) => {
         document.getElementById("play").disabled = true; 
         setTimeout(newGame, 1500);          
     }           
-    // actualGameCount gives a true real time count vs gameCnt which can lag.
+    // actualGameCount gives a, well not as true as i thought  time count apparently vs gameCnt which can lag.
     // This still is not 100% I probably need to rethink how i track the games and where.
     // because I really should not need to do this.
-    return humanScore + computerScore;
+    return (humanScore + computerScore);
 }
 
-// Final report after the race to 5.
 const reportResults = () => {
     gameRounds++;
     if (humanScore > computerScore) {
@@ -183,6 +210,8 @@ const reportResults = () => {
     }    
     let textContent = '<span>Round ' + gameRounds + '</span>:  [<span>' + humanScore + '</span>] [<span>' + computerScore + '</span>] '+ roundWinner + ' wins.';
     
+    // Strobe the winner.
+    strobeEffect(roundWinner, 1000, 100);
     appendResults(textContent);       
     showMatchResults();    
 }
@@ -203,7 +232,7 @@ const appendResults = (message) => {
     resultContainer.scrollTop = resultContainer.scrollHeight;
 }
 
-/**
+/*
  * if gameRounds is divisible by 3 see what the scores are and make a report.
  * if user or puter is ahead by more than 1 game, add an "s" the the end of game. 
  */
@@ -230,6 +259,48 @@ const showMatchResults = () => {
             statusReport(message);
         }
      }    
-
      appendResults(message);
 }
+
+/*
+ * highlights one of 2 seperate image div combos for a short time to enhace the click effect.
+ */
+const highLightPlayerIcon = (div, image, time) => {
+    const changeBack = () => {
+     document.querySelector(div).style.backgroundColor = 'rgb(159, 120, 98)';
+     document.querySelector(image).style.backgroundColor = 'rgb(159, 120, 98)';
+    }
+    // Highlight
+    document.querySelector(div).style.backgroundColor = 'rgb(209, 180, 163)';
+    document.querySelector(image).style.backgroundColor = 'rgb(209, 180, 163)';
+    //change back
+    setTimeout(changeBack, time);
+ }
+
+
+ /*
+  * A simple strobing effect to highlgiht thewinner.  When a player wins the round
+  * the winning icon will blink rapidly. Duration and interval can be adjusted.
+  */
+ const strobeEffect =( winner, duration, strobe) => {
+    //
+    let div = '';
+    let icon = '';
+
+    const stop = () => {
+        clearInterval(myInterval);
+    }
+    
+    console.log(winner)
+    if (winner === 'Player') {
+       div = 'div.h-choice';
+       icon ='#human-choice';
+    } else {
+        div = 'div.p-choice';
+        icon ='#puter-choice';
+    }
+    const myInterval = setInterval(function () {highLightPlayerIcon(div, icon, 50)} , strobe)
+    setTimeout(stop, duration);
+            
+
+ }
