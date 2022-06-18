@@ -7,15 +7,7 @@ BUG Every now and the the game count will go berzerk and the game is ended prema
 
 const profiles = {
     "userWins": ["rock scissors", "scissors paper", "paper rock"]
-};
-
-( () => {
-    console.log(
-`execute somethig here once... but what? 
-I  had one. Can't remember it now... I did not know you could
-break up a string like this when using 
-back ticks... shit, no line break or anything... It's the little things that matter.`);
-})();
+}:
 
 let gameMatches = 0;
 let gameCnt = 0;
